@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const app = express();
 const port = process.env.PORT || 8080;
+const api = require('./routes/api');
 
 mongoose.connect('mongodb://localhost/test');
 mongoose.Promise = global.Promise;
@@ -11,6 +12,7 @@ mongoose.Promise = global.Promise;
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, '../client/build')));
+app.use('/api', api);
 
 const schema = new mongoose.Schema({ /* TODO*/});
 
