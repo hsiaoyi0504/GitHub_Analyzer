@@ -15,10 +15,10 @@ class User extends Component {
   }
 
   componentDidMount() {
+    console.log(this.state.username);
     fetch(`https://api.github.com/users/${this.state.username}`)
     .then(res => res.json())
     .then(user => {
-      //console.log(user);
       this.setState({ user });
     })
     .catch(error => console.log('ooops'))
@@ -64,15 +64,25 @@ class User extends Component {
   }
 
   render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <h2>{this.state.username}</h2>
+    if(this.state.user.message === "Not Found"){
+      return (
+        <div className="App">
+          <div className="App-header">
+            <h2>User Not found</h2>
+          </div>
         </div>
-        {this.renderBasicProfile()}
-        {this.renderStat()}
-      </div>
-    );
+      );
+    } else{
+      return (
+        <div className="App">
+          <div className="App-header">
+            <h2>{this.state.username}</h2>
+          </div>
+          {this.renderBasicProfile()}
+          {this.renderStat()}
+        </div>
+      );
+    }
   }
 }
 
