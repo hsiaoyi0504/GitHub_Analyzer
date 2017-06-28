@@ -3,6 +3,7 @@ no-console: "off",
 no-underscore-dangle: "off" */
 import React, { Component } from 'react';
 import './style.css';
+import Stars from './Stars';
 
 class User extends Component {
   constructor(props) {
@@ -15,7 +16,7 @@ class User extends Component {
   }
 
   componentDidMount() {
-    console.log(this.state.username);
+    //console.log(this.state.username);
     fetch(`https://api.github.com/users/${this.state.username}`)
     .then(res => res.json())
     .then(user => {
@@ -40,8 +41,8 @@ class User extends Component {
   }
 
   renderStat() {
-    console.log(this.state.user.html_url);
-    console.log(this.state.user.starred_url);
+    //console.log(this.state.user.html_url);
+    //console.log(this.state.user.starred_url);
     const user = this.state.user;
     let followers = `${user.html_url}/followers`;
     let repos = `${user.html_url}?/tab=repositories`;
@@ -80,6 +81,7 @@ class User extends Component {
           </div>
           {this.renderBasicProfile()}
           {this.renderStat()}
+          <Stars uName={this.state.username}/>
         </div>
       );
     }
