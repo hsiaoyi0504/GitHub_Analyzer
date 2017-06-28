@@ -4,6 +4,7 @@ no-underscore-dangle: "off" */
 import React, { Component } from 'react';
 import './style.css';
 import Stars from './Stars';
+import Followers from './Followers';
 
 class User extends Component {
   constructor(props) {
@@ -11,16 +12,16 @@ class User extends Component {
     const { username } = this.props.match.params;
     this.state = {
       username: username,
-      user: {}
+      user: {},
+      isFetched: false,
     };
   }
 
   componentDidMount() {
-    //console.log(this.state.username);
     fetch(`https://api.github.com/users/${this.state.username}`)
     .then(res => res.json())
     .then(user => {
-      this.setState({ user });
+      this.setState({ user: user, isFetched: true });
     })
     .catch(error => console.log('ooops'))
   }
@@ -41,8 +42,6 @@ class User extends Component {
   }
 
   renderStat() {
-    //console.log(this.state.user.html_url);
-    //console.log(this.state.user.starred_url);
     const user = this.state.user;
     let followers = `${user.html_url}/followers`;
     let repos = `${user.html_url}?/tab=repositories`;
@@ -65,23 +64,37 @@ class User extends Component {
   }
 
   render() {
-    if(this.state.user.message === "Not Found"){
+    if (this.state.isFetched) {
+      if (this.state.user.message === "Not Found"){
+        return (
+          <div className="App">
+            <div className="App-header">
+              <h2>User Not found</h2>
+            </div>
+          </div>
+        );
+      } else{
+        return (
+          <div className="App">
+            <div className="App-header">
+              <h2>{this.state.username}</h2>
+            </div>
+            <div className="App-content">
+              {this.renderBasicProfile()}
+              {this.renderStat()}
+              <Stars uName={this.state.username}/>
+              <Followers url={this.state.user.followers_url} />
+              
+            </div>
+          </div>
+        );
+      }
+    } else {
       return (
         <div className="App">
           <div className="App-header">
-            <h2>User Not found</h2>
+            <h2>Fetching User...</h2>
           </div>
-        </div>
-      );
-    } else{
-      return (
-        <div className="App">
-          <div className="App-header">
-            <h2>{this.state.username}</h2>
-          </div>
-          {this.renderBasicProfile()}
-          {this.renderStat()}
-          <Stars uName={this.state.username}/>
         </div>
       );
     }
