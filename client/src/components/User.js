@@ -2,6 +2,7 @@
 no-console: "off",
 no-underscore-dangle: "off" */
 import React, { Component } from 'react';
+import Piechart from './piechart';
 import './style.css';
 
 class User extends Component {
@@ -10,20 +11,28 @@ class User extends Component {
     const { username } = this.props.match.params;
     this.state = {
       username: username,
-      user: {}
+      user: {},
+      repos: {}
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     fetch(`https://api.github.com/users/${this.state.username}`)
     .then(res => res.json())
-    .then(user => {
+    .then(user =>
       //console.log(user);
-      this.setState({ user });
-    })
-    .catch(error => console.log('ooops'))
+      this.setState({ user })
+    )
+    .catch(error => console.log(error))
+  
+    fetch(`https://api.github.com/users/${this.state.username}/repos`)
+    .then(res=> res.json())
+    .then(repos => {this.setState({repos});})
+    .catch(error => console.log(error));
+
   }
   
+
   renderBasicProfile() {
     const user = this.state.user;
     return(
@@ -43,6 +52,8 @@ class User extends Component {
     console.log(this.state.user.html_url);
     console.log(this.state.user.starred_url);
     const user = this.state.user;
+    const repoList = this.state.repos;
+    console.log(this.state.repos);
     let followers = `${user.html_url}/followers`;
     let repos = `${user.html_url}?/tab=repositories`;
     let following = `${user.html_url}/following`;
@@ -58,7 +69,11 @@ class User extends Component {
           <li>
             <a href={following} target="_blank" title="Number Of Following"><i>{user.following}</i><span>Following</span></a>
           </li>
-        </ul>
+          <li>
+            <a target="_blank" title="name of repos"><i>{repoList["name"]}</i><span>repo</span></a>
+          </li>
+          <Piechart />
+          </ul>
       </div>
     );
   }
