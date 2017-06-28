@@ -5,6 +5,7 @@ import React, { Component } from 'react';
 import './style.css';
 import Stars from './Stars';
 import Followers from './Followers';
+import Followings from './Followings';
 
 class User extends Component {
   constructor(props) {
@@ -84,7 +85,7 @@ class User extends Component {
               {this.renderStat()}
               <Stars uName={this.state.username}/>
               <Followers url={this.state.user.followers_url} />
-              
+              <Followings url={'https://api.github.com/users/'+this.state.username+'/following'} />
             </div>
           </div>
         );
@@ -93,7 +94,7 @@ class User extends Component {
       return (
         <div className="App">
           <div className="App-header">
-            <h2>Fetching User...</h2>
+            <h2>Fetching User Information ...</h2>
           </div>
         </div>
       );
