@@ -2,6 +2,8 @@
 no-console: "off",
 no-underscore-dangle: "off" */
 import React, { Component } from 'react';
+import Piechart from './Piechart';
+import Bar from './Barchart';
 import './style.css';
 import Stars from './Stars';
 import Followers from './Followers';
@@ -13,20 +15,23 @@ class User extends Component {
     const { username } = this.props.match.params;
     this.state = {
       username: username,
-      user: {},
-      isFetched: false,
+      user: {},      
+      isFetched: false
     };
   }
 
-  componentDidMount() {
+  componentWillMount() {
     fetch(`https://api.github.com/users/${this.state.username}`)
     .then(res => res.json())
     .then(user => {
-      this.setState({ user: user, isFetched: true });
+      let repoUrl=`https://api.github.com/users/${this.state.username}/repos?per_page=100`;
+      this.setState({user: user, isFetched: true});
+      
     })
-    .catch(error => console.log('ooops'))
+    .catch(error => console.log(error))
   }
   
+
   renderBasicProfile() {
     const user = this.state.user;
     return(
@@ -59,8 +64,8 @@ class User extends Component {
           <li>
             <a href={following} target="_blank" title="Number Of Following"><i>{user.following}</i><span>Following</span></a>
           </li>
-        </ul>
-      </div>
+          </ul>
+     </div>
     );
   }
 
@@ -75,17 +80,21 @@ class User extends Component {
           </div>
         );
       } else{
+        const pageCnt = Math.ceil(this.state.user.public_repos/100);
         return (
           <div className="App">
             <div className="App-header">
               <h2>{this.state.username}</h2>
             </div>
             <div className="App-content">
+             
               {this.renderBasicProfile()}
               {this.renderStat()}
               <Stars uName={this.state.username}/>
               <Followers url={this.state.user.followers_url} />
               <Followings url={'https://api.github.com/users/'+this.state.username+'/following'} />
+              <Piechart userName={this.state.username} pageCnt={pageCnt} />
+              <Bar userName={this.state.username} pageCnt={pageCnt} />
             </div>
           </div>
         );
