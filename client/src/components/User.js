@@ -8,6 +8,7 @@ import './style.css';
 import Stars from './Stars';
 import Followers from './Followers';
 import Followings from './Followings';
+import Repos from './Repos';
 
 class User extends Component {
   constructor(props) {
@@ -25,8 +26,7 @@ class User extends Component {
     .then(res => res.json())
     .then(user => {
       let repoUrl=`https://api.github.com/users/${this.state.username}/repos?per_page=100`;
-      this.setState({user: user, isFetched: true});
-      
+      this.setState({user: user, isFetched: true});      
     })
     .catch(error => console.log(error))
   }
@@ -93,6 +93,7 @@ class User extends Component {
               {this.renderStat()}
               <Followers url={this.state.user.followers_url} />
               <Followings url={'https://api.github.com/users/'+this.state.username+'/following'} />
+              <Repos username={this.state.username}/>
               <Piechart userName={this.state.username} pageCnt={pageCnt} />
               <Bar userName={this.state.username} pageCnt={pageCnt} />
             </div>
