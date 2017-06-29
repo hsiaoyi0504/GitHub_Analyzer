@@ -34,14 +34,9 @@ class Piechart extends Component{
     fetch(this.state.url+i)
     .then(res => res.json())
     .then( reposlist=>{
-      //var nameList = [];
       var lanCnt = [];
       var lan = [];
-      //var repoTime=[];
-      //var order=[];
       for(var i = 0;i<reposlist.length;i++){
-         // nameList.push(reposlist[i].name);
-          //order.push(reposlist[i].language);
           const lanIdx = lan.indexOf(reposlist[i].language);
           if(lanIdx!== -1&&this.state.totalLan.indexOf(reposlist[i].language)!==-1){
             lanCnt[lanIdx] +=1;
@@ -49,16 +44,12 @@ class Piechart extends Component{
             lan.push(reposlist[i].language);
             lanCnt.push(1);
         }
-            //console.log(reposlist[i].created_at);
-            //repoTime.push(reposlist[i].created_at);
-            //console.log(repoTime[i]);
       }
         console.log(reposlist)
         const time = reposlist[0].created_at;
         const userName = this.state.username;
         const repoName = reposlist[0].name;
         const language = reposlist[0].language;
-        console.log(time+userName+repoName+language);
         fetch('/api/recommendation',{
         method: 'post',
         headers:{Accept:'application/json','Content-Type':'application/json'},
@@ -82,8 +73,6 @@ class Piechart extends Component{
         //repoTime:repoTime,
         //reposname:nameList
       });
-    //   console.log(this.state.languageList);
-    //   console.log(this.state.languageCnt);
       
     })
 

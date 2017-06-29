@@ -47,9 +47,6 @@ class Bar extends Component{
         languageCnt:lanCnt,
         isFetch:true
       })
-       
-      //console.log(this.state.languageList);
-      //console.log(this.state.languageCnt);
       
     })
     .catch(error => console.log(error));
@@ -64,10 +61,8 @@ class Bar extends Component{
                         "#712148","#e533f7","#82b0c5","#737515","#43af83","#50fc2e","#42637c","#c4ba1a","#d163ed","#57523c"]
         let bgcl=[];
         for(var idx in this.state.languageList){
-            //console.log(idx)
             bgcl.push(colorList[this.state.totalLan.indexOf(this.state.languageList[idx])]);
         }
-        //console.log(bgcl)
         var i = 0;
         const data = {labels: this.state.languageList,
         datasets: [{
