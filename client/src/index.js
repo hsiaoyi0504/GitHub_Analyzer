@@ -7,6 +7,7 @@ import './index.css';
 import Home from './components/Home';
 import User from './components/User';
 
+
 ReactDOM.render(
   <BrowserRouter>
     <div>
@@ -14,7 +15,7 @@ ReactDOM.render(
         <Route path="/user/:username" component={User} />
         <Route path="/" component={Home} />
       </Switch>
-    </div>
+     </div>
   </BrowserRouter>
   , document.getElementById('root'));
 registerServiceWorker();

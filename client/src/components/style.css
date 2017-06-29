@@ -65,6 +65,55 @@ ul {
   border: none;
 }
 
+
+.follower {
+  display: inline-block;
+  width: 20%;
+  height: 20%;
+}
+
+.following {
+  display: inline-block;
+  width: 20%;
+  height: 20%;
+}
+
+
+@media screen and (min-width: 400px) and (max-width: 700px) {
+  .user-profile-img {
+    width: 60%;
+  }
+
+  .followers {
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+    float: left;
+  }
+
+  .followings {
+    display: block;
+    width: 80%;
+    margin: 0 auto;
+    float: left;
+  }
+}
+
+@media screen and (min-width: 700px) and (max-width: 2000px) {
+  .user-profile-img {
+    width: 20%;
+  }
+  .followers {
+    display: block;
+    width: 20%;
+  }
+  .followings {
+    display: block;
+    width: 20%;
+  }
+}
+
+
 @keyframes App-logo-spin {
   from { transform: rotate(0deg); }
   to { transform: rotate(360deg); }

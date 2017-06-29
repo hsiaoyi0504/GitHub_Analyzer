@@ -14,7 +14,7 @@ class Stars extends Component {
   }
 
   componentWillMount() {
-      console.log('willmount' + this.props.uName);
+      // console.log('willmount' + this.props.uName);
       fetch(`https://api.github.com/users/${this.props.uName}/starred?per_page=1`)
       .then(res => {
           // console.log('idothingshere');

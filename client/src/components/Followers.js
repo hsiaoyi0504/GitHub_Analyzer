@@ -48,12 +48,12 @@ class Followers extends Component {
         );
       } else {
         const followers = this.state.followers.map(
-          follower => (<li key={follower.id}><img src={follower.avatar_url} alt={follower.login} /></li>)
+          follower => (<a href={'/user/'+follower.login} key={follower.id}><img className="follower" src={follower.avatar_url} alt={follower.login} /></a>)
         );
         return (
           <div className="followers">
             <h5>Followers</h5>
-            <ul>{followers}</ul>
+            <div>{followers}</div>
           </div>
         );
       }
