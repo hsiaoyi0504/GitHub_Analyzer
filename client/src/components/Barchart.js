@@ -1,11 +1,10 @@
 import React, {Component} from 'react';
-import {Doughnut} from 'react-chartjs-2';
+import {HorizontalBar} from 'react-chartjs-2';
 
-class Piechart extends Component{
+class Bar extends Component{
 
     constructor(props){
         super(props);
-        console.log(props);
         this.state = {
             languageList:[],
             languageCnt:[],
@@ -25,10 +24,9 @@ class Piechart extends Component{
 
 
     componentWillMount() {
-        // console.log(this.state.pagecnt);
+    console.log(this.state.url+this.state.pagecnt)
     for(var i = 1;i<=this.state.pagecnt;i++){
-    console.log(this.state.url+i)
-    fetch(this.state.url+i)
+    fetch(this.state.url+this.state.pagecnt)
     .then(res => res.json())
     .then( reposlist=>{
       var nameList = [];
@@ -50,14 +48,14 @@ class Piechart extends Component{
         isFetch:true
       })
        
-    //   console.log(this.state.languageList);
-    //   console.log(this.state.languageCnt);
+      console.log(this.state.languageList);
+      console.log(this.state.languageCnt);
       
     })
     .catch(error => console.log(error));
-    }
-  }
 
+  }
+    }
     render(){
         const colorList=["#682205","#b2999a","#4319fb","#4df573","#528ce0","#e21db2","#f9a813","#a2696e","#904f02","#1744f8",
                         "#d196c6","#d38141","#556760","#0543ce","#57a0f0","#960d2c","#02e065","#5c687b","#d00a5f","#ccdb1d",
@@ -73,22 +71,41 @@ class Piechart extends Component{
         var i = 0;
         const data = {labels: this.state.languageList,
         datasets: [{
+        label:'language barchart',
 		data: this.state.languageCnt,
 		backgroundColor: bgcl,
+        borderColor: 'rgba(255,99,132,0.2)',
+        borderWidth: 1,
 		hoverBackgroundColor: bgcl	}]
         };
+        const options = {
+            legend:{ 
 
-        const wd = 30;
-        const ht = 10;
+            },
+            layout:{
+                padding:{
+                    left:10,
+                    reight:10,
+                    top:0,
+                    bottom:0
+                },
+            },
+            xAxisID:'abcd',
+            categoryPercentage: 0.5,
+
+        }
+        const wd = 10;
+        const ht = 2;
     return(
+    
     <div>
         <div>
         <h2>Piechart Example</h2>
-        <Doughnut data={data}  width={wd} height={ht}/>
+        <HorizontalBar data={data} options={options}  width={wd} height={ht} />
         </div>
     </div>);
     }
 
 }
 
-export default Piechart;
+export default Bar;
