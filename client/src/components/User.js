@@ -2,8 +2,12 @@
 no-console: "off",
 no-underscore-dangle: "off" */
 import React, { Component } from 'react';
-import Piechart from './piechart';
+import Piechart from './Piechart';
+import Bar from './Barchart';
 import './style.css';
+import Stars from './Stars';
+import Followers from './Followers';
+import Followings from './Followings';
 
 class User extends Component {
   constructor(props) {
@@ -11,25 +15,20 @@ class User extends Component {
     const { username } = this.props.match.params;
     this.state = {
       username: username,
-      user: {},
-      repos: {}
+      user: {},      
+      isFetched: false
     };
   }
 
   componentWillMount() {
     fetch(`https://api.github.com/users/${this.state.username}`)
     .then(res => res.json())
-    .then(user =>
-      //console.log(user);
-      this.setState({ user })
-    )
+    .then(user => {
+      let repoUrl=`https://api.github.com/users/${this.state.username}/repos?per_page=100`;
+      this.setState({user: user, isFetched: true});
+      
+    })
     .catch(error => console.log(error))
-  
-    fetch(`https://api.github.com/users/${this.state.username}/repos`)
-    .then(res=> res.json())
-    .then(repos => {this.setState({repos});})
-    .catch(error => console.log(error));
-
   }
   
 
@@ -49,11 +48,7 @@ class User extends Component {
   }
 
   renderStat() {
-    console.log(this.state.user.html_url);
-    console.log(this.state.user.starred_url);
     const user = this.state.user;
-    const repoList = this.state.repos;
-    console.log(this.state.repos);
     let followers = `${user.html_url}/followers`;
     let repos = `${user.html_url}?/tab=repositories`;
     let following = `${user.html_url}/following`;
@@ -69,25 +64,50 @@ class User extends Component {
           <li>
             <a href={following} target="_blank" title="Number Of Following"><i>{user.following}</i><span>Following</span></a>
           </li>
-          <li>
-            <a target="_blank" title="name of repos"><i>{repoList["name"]}</i><span>repo</span></a>
-          </li>
-          <Piechart />
           </ul>
-      </div>
+     </div>
     );
   }
 
   render() {
-    return (
-      <div className="App">
-        <div className="App-header">
-          <h2>{this.state.username}</h2>
+    if (this.state.isFetched) {
+      if (this.state.user.message === "Not Found"){
+        return (
+          <div className="App">
+            <div className="App-header">
+              <h2>User Not found</h2>
+            </div>
+          </div>
+        );
+      } else{
+        const pageCnt = Math.ceil(this.state.user.public_repos/100);
+        return (
+          <div className="App">
+            <div className="App-header">
+              <h2>{this.state.username}</h2>
+            </div>
+            <div className="App-content">
+             
+              {this.renderBasicProfile()}
+              {this.renderStat()}
+              <Stars uName={this.state.username}/>
+              <Followers url={this.state.user.followers_url} />
+              <Followings url={'https://api.github.com/users/'+this.state.username+'/following'} />
+              <Piechart userName={this.state.username} pageCnt={pageCnt} />
+              <Bar userName={this.state.username} pageCnt={pageCnt} />
+            </div>
+          </div>
+        );
+      }
+    } else {
+      return (
+        <div className="App">
+          <div className="App-header">
+            <h2>Fetching User Information ...</h2>
+          </div>
         </div>
-        {this.renderBasicProfile()}
-        {this.renderStat()}
-      </div>
-    );
+      );
+    }
   }
 }
 
