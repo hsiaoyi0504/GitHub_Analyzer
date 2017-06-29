@@ -2,6 +2,7 @@
 no-console: "off",
 no-underscore-dangle: "off" */
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import './style.css';
 
 class Followings extends Component {
@@ -48,12 +49,12 @@ class Followings extends Component {
         );
       } else {
         const followings = this.state.followings.map(
-          following => (<li key={following.id}><img src={following.avatar_url} alt={following.login} /></li>)
+          following => (<a key={following.id} href={'/user/'+following.login}><img className="following" src={following.avatar_url} alt={following.login} /></a>)
         );
         return (
           <div className="followings">
             <h5>Followings</h5>
-            <ul>{followings}</ul>
+            <div>{followings}</div>
           </div>
         );
       }
