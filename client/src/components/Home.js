@@ -34,13 +34,15 @@ class Home extends Component {
         <div className="App-header">
           <h2>GitHub Analyzer</h2>
         </div>
-        <form onSubmit={this.handleSubmit}>
-          <label>
-            User name:
-            <input type="text" value={this.state.value} onChange={this.handleChange} />
-          </label>
-          <input type="submit" value="Submit" />
-        </form>
+        <div className="App-content">
+          <form onSubmit={this.handleSubmit}>
+            <label>
+              User name:
+              <input type="text" value={this.state.value} onChange={this.handleChange} />
+            </label>
+            <input type="submit" value="Submit" />
+          </form>
+        </div>
       </div>
     );
   }
