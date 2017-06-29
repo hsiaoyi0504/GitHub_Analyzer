@@ -77,6 +77,43 @@ class User extends Component {
     );
   }
 
+  // renderPieChart(){
+  //   const totalLan = ["JavaScript","Java","Python","CSS","PHP","Ruby","C++","C","HTML",
+  //                       "shell","C#","Objective-C","R","VimL","Go","Perl","CoffeeScript",
+  //                       "Tex","Swift","Scala","Emacs Lisp","Haskell","Lua","Clojure",
+  //                       "Matlab","Arduino","Groovy","Puppet","Rust","PowerShell","Erlang",
+  //                       "Visual Basic","Processing","Assembly","TypeScript","XSLT","ActionScript",
+  //                       "ASP","OCaml","D","Scheme","Dart","Common Lisp","Julia","F%",
+  //                       "Elixir","FORTRAN","Haxe","Racket","Logos"]
+  //   let lanCnt=[];
+  //   let lan = [];
+  //   for(var i = 1; i<=Math.ceil(this.state.user.public_repos/100);i++){
+  //     console.log(`https://api.github.com/users/${this.state.username}/repos?per_page=100&page=${i}`)
+  //     fetch(`https://api.github.com/users/${this.state.username}/repos?per_page=100&page=${i}`)
+  //     .then(res => res.json())
+  //     .then(reposlist=>{
+  //       for(var i = 0;i<reposlist.length;i++){
+  //         const lanIdx = lan.indexOf(reposlist[i].language);
+  //         if(lanIdx!== -1&&totalLan.indexOf(reposlist[i].language)!==-1){
+  //           lanCnt[lanIdx]+=1;
+  //         }else if(totalLan.indexOf(reposlist[i].language)!==-1){
+  //           //console.log(reposlist[i].language);
+  //           lan.push(reposlist[i].language);
+  //           lanCnt.push(1);
+  //         }
+  //       }
+
+  //     })
+  //   }
+  //   console.log(lan);
+  //   console.log(lanCnt);
+  //   return(
+  //     <div>
+  //       <Piechart lanlist={lan} lanCnt={lanCnt}/>
+  //     </div>
+  //   )
+  // }
+
   renderStat() {
     const user = this.state.user;
     let followers = `${user.html_url}/followers`;

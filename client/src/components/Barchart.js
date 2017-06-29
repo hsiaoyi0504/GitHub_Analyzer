@@ -48,8 +48,8 @@ class Bar extends Component{
         isFetch:true
       })
        
-      console.log(this.state.languageList);
-      console.log(this.state.languageCnt);
+      //console.log(this.state.languageList);
+      //console.log(this.state.languageCnt);
       
     })
     .catch(error => console.log(error));
@@ -62,14 +62,14 @@ class Bar extends Component{
                         "#679d92","#db7da5","#1ef0c8","#4c5707","#3c9811","#b01d1a","#fbffde","#8248d5","#2d6c1c","#8678fb",
                         "#02d728","#7d70fb","#15d0cc","#8edc39","#eb948d","#b56afc","#8d178c","#4e30fa","#76d530","#543413",
                         "#712148","#e533f7","#82b0c5","#737515","#43af83","#50fc2e","#42637c","#c4ba1a","#d163ed","#57523c"]
-      let bgcl=[];
-      for(var idx in this.state.languageList){
-        console.log(idx)
-        bgcl.push(colorList[this.state.totalLan.indexOf(this.state.languageList[idx])]);
-      }
-      console.log(bgcl)
-      var i = 0;
-      const data = {labels: this.state.languageList,
+        let bgcl=[];
+        for(var idx in this.state.languageList){
+            //console.log(idx)
+            bgcl.push(colorList[this.state.totalLan.indexOf(this.state.languageList[idx])]);
+        }
+        //console.log(bgcl)
+        var i = 0;
+        const data = {labels: this.state.languageList,
         datasets: [{
           label:'language barchart',
 		      data: this.state.languageCnt,

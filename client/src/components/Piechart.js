@@ -8,9 +8,12 @@ class Piechart extends Component{
         console.log(props);
         this.state = {
             languageList:[],
+            reposname:[],
             languageCnt:[],
             pagecnt: props.pageCnt,
             username : props.userName,
+            repoTime:[],
+            repoCnt:0,
             url: `https://api.github.com/users/${props.userName}/repos?per_page=100&page=`,
             isFetch:false,
             totalLan:["JavaScript","Java","Python","CSS","PHP","Ruby","C++","C","HTML",
@@ -31,32 +34,86 @@ class Piechart extends Component{
     fetch(this.state.url+i)
     .then(res => res.json())
     .then( reposlist=>{
-      var nameList = [];
+      //var nameList = [];
       var lanCnt = [];
       var lan = [];
+      //var repoTime=[];
+      //var order=[];
       for(var i = 0;i<reposlist.length;i++){
-          nameList.push(reposlist[i].name);
+         // nameList.push(reposlist[i].name);
+          //order.push(reposlist[i].language);
           const lanIdx = lan.indexOf(reposlist[i].language);
           if(lanIdx!== -1&&this.state.totalLan.indexOf(reposlist[i].language)!==-1){
             lanCnt[lanIdx] +=1;
         }else if(this.state.totalLan.indexOf(reposlist[i].language)!==-1){
             lan.push(reposlist[i].language);
             lanCnt.push(1);
-            }
         }
-      this.setState({
+            //console.log(reposlist[i].created_at);
+            //repoTime.push(reposlist[i].created_at);
+            //console.log(repoTime[i]);
+      }
+        console.log(reposlist)
+        const time = reposlist[0].created_at;
+        const userName = this.state.username;
+        const repoName = reposlist[0].name;
+        const language = reposlist[0].language;
+        console.log(time+userName+repoName+language);
+        fetch('/api/recommendation',{
+        method: 'post',
+        headers:{Accept:'application/json','Content-Type':'application/json'},
+            body: JSON.stringify({
+                time: JSON.stringify(time),
+                userName: userName,
+                repoName: repoName,
+                language: language,
+            }),
+        }).then(res=>res.json())
+        .then((res)=>{console.log(res)})
+        .catch(error=>console.log(error))
+      
+
+        this.setState({
         languageList:lan,
+        //languageOrder:order,
         languageCnt:lanCnt,
-        isFetch:true
-      })
-       
+        isFetch:true,
+        //repoCnt:reposlist.length,
+        //repoTime:repoTime,
+        //reposname:nameList
+      });
     //   console.log(this.state.languageList);
     //   console.log(this.state.languageCnt);
       
     })
+
+
     .catch(error => console.log(error));
     }
   }
+    
+    handlePost(){
+        console.log(this.state.repoTime);
+        for(var i = 0;i <this.state.repoCnt;i++){
+        const repoTime=this.state.repoTime[i];
+        const userName=this.state.username;
+        const repoName=this.state.reposname[i];
+        const language=this.state.order[i];
+         fetch('/api/recommendation',{
+            method: 'post',
+            headers:{Accept:'application/json','Tontent-Type':'application/json'},
+            body: JSON.stringify({
+                repoTime,
+                userName,
+                repoName,
+                language,
+            }),
+        }).then(res=>res.json())
+        .then((res)=>{console.log(res)})
+        .catch(error=>console.log(error))
+    }
+    }
+
 
     render(){
         const colorList=["#682205","#b2999a","#4319fb","#4df573","#528ce0","#e21db2","#f9a813","#a2696e","#904f02","#1744f8",
@@ -66,10 +123,10 @@ class Piechart extends Component{
                         "#712148","#e533f7","#82b0c5","#737515","#43af83","#50fc2e","#42637c","#c4ba1a","#d163ed","#57523c"]
         let bgcl=[];
         for(var idx in this.state.languageList){
-            console.log(idx)
+        //    console.log(idx)
             bgcl.push(colorList[this.state.totalLan.indexOf(this.state.languageList[idx])]);
         }
-        console.log(bgcl)
+        //console.log(bgcl)
         var i = 0;
         const data = {labels: this.state.languageList,
         datasets: [{
@@ -78,6 +135,10 @@ class Piechart extends Component{
 		hoverBackgroundColor: bgcl	}]
         };
 
+        //console.log(this.state.repoTime);
+        
+
+    
         const wd = 30;
         const ht = 10;
     return(<Doughnut data={data}  width={wd} height={ht}/>);
