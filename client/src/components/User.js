@@ -25,6 +25,7 @@ class User extends Component {
     };
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.displayRepos = this.displayRepos.bind(this);
   }
 
   componentWillMount() {
@@ -47,7 +48,7 @@ class User extends Component {
       value: '',
       redirect: false
     };
-    
+
     fetch(`https://api.github.com/users/${this.state.username}`)
     .then(res => res.json())
     .then(user => {
@@ -106,6 +107,19 @@ class User extends Component {
     );
   }
 
+  displayRepos() {
+    if(this.state.user.public_repos === 0) {
+      return(
+        <p>None to display.</p>
+      );
+    }
+    else {
+      return(
+        <Repos username={this.state.username}/>
+      );
+    }
+  }
+
   render() {
     if(this.state.redirect){
       return <Redirect push to={"/user/"+this.state.value} />;
@@ -145,7 +159,7 @@ class User extends Component {
                 <Bar userName={this.state.username} pageCnt={pageCnt} />
               </Col>
               <Col xs={12} mdOffset={3} md={6}>
-                <Repos username={this.state.username}/>
+                {this.displayRepos()}
               </Col>
               <Col xs={12} md={6}>
                 <Followers url={this.state.user.followers_url} />

@@ -13,9 +13,9 @@ class Repos extends Component {
   componentWillMount() {
     fetch(`https://api.github.com/search/repositories?q=user:${this.props.username}&sort=star&order=desc`)
     .then(res => res.json())
-    .then(data => {
-        // console.log(data);
-        this.setState({ data: data, isFetched: true });
+    .then(d => {
+        console.log(d);
+        this.setState({ data: d, isFetched: true });
     })
     .catch(error => 'oops i did it again...');
   }
