@@ -2,7 +2,8 @@
 no-console: "off",
 no-underscore-dangle: "off" */
 import React, { Component } from 'react';
-import { Col } from 'react-bootstrap';
+import { Redirect } from 'react-router';
+import { Col, Form, FormControl, Button } from 'react-bootstrap';
 import Piechart from './Piechart';
 import Bar from './Barchart';
 import './style.css';
@@ -18,8 +19,12 @@ class User extends Component {
     this.state = {
       username: username,
       user: {},      
-      isFetched: false
+      isFetched: false,
+      value: '',
+      redirect: false
     };
+    this.handleChange = this.handleChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentWillMount() {
@@ -31,7 +36,35 @@ class User extends Component {
     })
     .catch(error => console.log(error))
   }
+
+  componentWillReceiveProps(nextProps) {
+    const { username } = nextProps.match.params;
+
+    this.state = {
+      username: username,
+      user: {},      
+      isFetched: false,
+      value: '',
+      redirect: false
+    };
+    
+    fetch(`https://api.github.com/users/${this.state.username}`)
+    .then(res => res.json())
+    .then(user => {
+      // let repoUrl=`https://api.github.com/users/${this.state.username}/repos?per_page=100`;
+      this.setState({user: user, isFetched: true});
+    })
+    .catch(error => console.log(error))
+  }
   
+  handleChange(event) {
+    this.setState({value: event.target.value});
+  }
+
+  handleSubmit(event) {
+    this.setState({redirect: true});
+    event.preventDefault();
+  }
 
   renderBasicProfile() {
     const user = this.state.user;
@@ -74,6 +107,9 @@ class User extends Component {
   }
 
   render() {
+    if(this.state.redirect){
+      return <Redirect push to={"/user/"+this.state.value} />;
+    }
     if (this.state.isFetched) {
       if (this.state.user.message === "Not Found"){
         return (
@@ -92,6 +128,11 @@ class User extends Component {
           <div className="App">
             <div className="App-header">
               <h2>GitHub Analyzer</h2>
+              <Form onSubmit={this.handleSubmit} inline>
+                {/*<ControlLabel>User name: </ControlLabel>*/}
+                <FormControl type="text" placeholder="Enter GitHub ID" bsSize="sm" value={this.state.value} onChange={this.handleChange} />
+                <Button type="submit" bsSize="sm">Submit</Button>
+              </Form>
             </div>
             <div className="App-content">
               <Col xs={12} md={4}>

@@ -26,6 +26,24 @@ class Followings extends Component {
     .catch(error => console.log("opps"));
   }
 
+  componentWillReceiveProps(nextProps) {
+    this.state = {
+      url: nextProps.url,
+      isWait: true,
+      followings: [],
+    };
+    
+    fetch(this.state.url)
+    .then(res => res.json())
+    .then(followings =>
+      this.setState({
+        followings: followings,
+        isWait: false,
+      })
+    )
+    .catch(error => console.log("opps"));
+  }
+
   render() {
     if(this.state.isWait) {
       return (
