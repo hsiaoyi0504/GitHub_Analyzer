@@ -38,9 +38,9 @@ class Home extends Component {
         </div>
         <div className="App-content">
           <Form onSubmit={this.handleSubmit} inline>
-            <ControlLabel>User name: </ControlLabel>
-            <FormControl type="text" value={this.state.value} onChange={this.handleChange} />
-            <Button type="submit">Submit</Button>
+            {/*<ControlLabel>User name: </ControlLabel>*/}
+            <FormControl type="text" placeholder="Enter GitHub ID" bsSize="lg" value={this.state.value} onChange={this.handleChange} />
+            <Button type="submit" bsSize="lg">Submit</Button>
           </Form>
         </div>
       </div>
