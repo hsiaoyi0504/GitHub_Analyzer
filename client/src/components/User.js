@@ -103,7 +103,9 @@ class User extends Component {
                 <Piechart userName={this.state.username} pageCnt={pageCnt} />
                 <Bar userName={this.state.username} pageCnt={pageCnt} />
               </Col>
-              <Repos username={this.state.username}/>
+              <Col xs={12} mdOffset={3} md={6}>
+                <Repos username={this.state.username}/>
+              </Col>
               <Col xs={12} md={6}>
                 <Followers url={this.state.user.followers_url} />
               </Col>

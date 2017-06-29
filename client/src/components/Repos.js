@@ -21,19 +21,28 @@ class Repos extends Component {
   }
 
   render() {
-    // console.log(this.state.data.items);
     let repos = this.state.data.items;
-    // console.log(repos);
     if(!this.state.isFetched) return(
         <div>Loading...</div>
     );
     else return(
       <div>
-        <ul>
-        {repos.map(d => 
-          <li key={d.id}><a href={d.html_url} target="_blank"><i>{d.full_name}</i><span> {d.stargazers_count}</span></a></li>
-        )}
-        </ul>
+        <table className="table table-bordered">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Stars</th>
+            </tr>
+          </thead>
+          <tbody>
+            {repos.map(d =>
+              <tr key={d.id}>
+                <td><a href={d.html_url} target="_blank"><i>{d.full_name}</i></a></td>
+                <td>{d.stargazers_count}</td>
+              </tr>
+            )}
+          </tbody>
+        </table>
       </div>  
     );
   }
