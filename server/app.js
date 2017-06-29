@@ -3,14 +3,12 @@ const path = require('path');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 const app = express();
-const port = process.env.PORT || 3001;
+const port = process.env.PORT || 8080;
 
 const random = require('mongoose-simple-random');
 
 mongoose.connect('mongodb://localhost/test');
 mongoose.Promise = global.Promise;
-
-var db = mongoose.connection;
 
 
 app.use(bodyParser.urlencoded({ extended: false }));
@@ -31,6 +29,7 @@ const reposchema = new Schema({
 reposchema.plugin(random);
 
 const repo = mongoose.model('repos', reposchema);
+
 
 app.get('/api/', function (req, res) {
   console.log('Got a GET request');
@@ -70,7 +69,9 @@ app.post('/api/recommendation/', (req,res)=>{
 
 })
 
-
+app.get('/*', function (req, res) {
+  res.sendFile(path.join(__dirname, '../client/build', 'index.html'));
+});
 
 app.listen(port, function () {
   console.log('GitHub Analyzer App listening on port: ' + port);
