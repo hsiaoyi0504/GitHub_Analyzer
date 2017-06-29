@@ -80,13 +80,7 @@ class Piechart extends Component{
 
         const wd = 30;
         const ht = 10;
-    return(
-    <div>
-        <div>
-        <h2>Piechart Example</h2>
-        <Doughnut data={data}  width={wd} height={ht}/>
-        </div>
-    </div>);
+    return(<Doughnut data={data}  width={wd} height={ht}/>);
     }
 
 }

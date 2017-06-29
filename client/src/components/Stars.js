@@ -35,13 +35,7 @@ class Stars extends Component {
     // console.log(this.state.pageNum);
     let starLink = `https://github.com/${this.props.uName}?tab=stars`;
     return (
-      <div className="user-stars">
-        <ul>
-            <li>
-                <a href ={starLink} target="_blank" title="Repos Starred by User"><i>{this.state.pageNum}</i><span>Stars</span></a>
-            </li>
-        </ul>
-      </div>
+      <a href ={starLink} target="_blank" title="Repos Starred by User"><i>{this.state.pageNum}</i></a>
     );
   }
 }

@@ -2,6 +2,7 @@
 no-console: "off",
 no-underscore-dangle: "off" */
 import React, { Component } from 'react';
+import { Col } from 'react-bootstrap';
 import Piechart from './Piechart';
 import Bar from './Barchart';
 import './style.css';
@@ -25,8 +26,8 @@ class User extends Component {
     fetch(`https://api.github.com/users/${this.state.username}`)
     .then(res => res.json())
     .then(user => {
-      let repoUrl=`https://api.github.com/users/${this.state.username}/repos?per_page=100`;
-      this.setState({user: user, isFetched: true});      
+      // let repoUrl=`https://api.github.com/users/${this.state.username}/repos?per_page=100`;
+      this.setState({user: user, isFetched: true});
     })
     .catch(error => console.log(error))
   }
@@ -36,13 +37,9 @@ class User extends Component {
     const user = this.state.user;
     return(
       <div className="user-profile">
-        <a href={user.html_url} target="_blank" title={user.name || user.login}>
-          <img className="user-profile-img" src={user.avatar_url}/>
-        </a>
-        <h2>
-          <a href={user.html_url} title={user.login} target="_blank">{user.name || user.login}</a>
-        </h2>
-        <h3>{user.location || 'I Live In My Mind'}</h3>
+        <img alt="user-profile-img" className="user-profile-img" src={user.avatar_url}/>
+        <h3>{user.name || user.login}</h3>
+        <h5>{user.location || 'I Live In My Mind'}</h5>
       </div>
     );
   }
@@ -54,18 +51,24 @@ class User extends Component {
     let following = `${user.html_url}/following`;
     return(
       <div className="user-stats">
-        <ul>
-          <li>
-            <a href={followers} target="_blank" title="Number Of Followers"><i>{user.followers}</i><span>Followers</span></a>
-          </li>
-          <li>
-            <a href={repos} target="_blank" title="Number Of Repositoriy"><i>{user.public_repos}</i><span>Repositoriy</span></a>
-          </li>
-          <li>
-            <a href={following} target="_blank" title="Number Of Following"><i>{user.following}</i><span>Following</span></a>
-          </li>
-          <Stars uName={this.state.username}/>
-        </ul>
+        <table className="table table-bordered">
+          <thead>
+            <tr>
+              <th>Followers</th>
+              <th>Repos</th>
+              <th>Folloing</th>
+              <th>Stars</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><a href={followers} target="_blank" title="Number Of Followers"><i>{user.followers}</i></a></td>
+              <td><a href={repos} target="_blank" title="Number Of Repositoriy"><i>{user.public_repos}</i></a></td>
+              <td><a href={following} target="_blank" title="Number Of Following"><i>{user.following}</i></a></td>
+              <td><Stars uName={this.state.username}/></td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     );
   }
@@ -76,7 +79,10 @@ class User extends Component {
         return (
           <div className="App">
             <div className="App-header">
-              <h2>User Not found</h2>
+              <h2>GitHub Analyzer</h2>
+            </div>
+            <div className="App-content">
+              User Not found
             </div>
           </div>
         );
@@ -85,17 +91,25 @@ class User extends Component {
         return (
           <div className="App">
             <div className="App-header">
-              <h2>{this.state.username}</h2>
+              <h2>GitHub Analyzer</h2>
             </div>
             <div className="App-content">
-             
-              {this.renderBasicProfile()}
-              {this.renderStat()}
-              <Followers url={this.state.user.followers_url} />
-              <Followings url={'https://api.github.com/users/'+this.state.username+'/following'} />
+              <Col xs={12} md={4}>
+                {this.renderBasicProfile()}
+                {this.renderStat()}
+              </Col>
+              <Col xs={12} md={8}>
+                <h4>Language Usage</h4>
+                <Piechart userName={this.state.username} pageCnt={pageCnt} />
+                <Bar userName={this.state.username} pageCnt={pageCnt} />
+              </Col>
               <Repos username={this.state.username}/>
-              <Piechart userName={this.state.username} pageCnt={pageCnt} />
-              <Bar userName={this.state.username} pageCnt={pageCnt} />
+              <Col xs={12} md={6}>
+                <Followers url={this.state.user.followers_url} />
+              </Col>
+              <Col xs={12} md={6}>
+                <Followings url={'https://api.github.com/users/'+this.state.username+'/following'} />
+              </Col>
             </div>
           </div>
         );
@@ -104,7 +118,10 @@ class User extends Component {
       return (
         <div className="App">
           <div className="App-header">
-            <h2>Fetching User Information ...</h2>
+            <h2>GitHub Analyzer</h2>
+          </div>
+          <div className="App-content">
+            Fetching User Information ...
           </div>
         </div>
       );

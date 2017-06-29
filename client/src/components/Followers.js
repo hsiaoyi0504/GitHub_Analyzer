@@ -30,7 +30,7 @@ class Followers extends Component {
     if(this.state.isWait) {
       return (
         <div className="followers">
-          <h5>Followers</h5>
+          <h4>Followers</h4>
           <div>
             <div>Fetching...</div>
           </div>
@@ -40,7 +40,7 @@ class Followers extends Component {
       if (this.state.followers.length === 0) {
         return (
           <div className="followers">
-            <h5>Followers</h5>
+            <h4>Followers</h4>
             <div>
               <div>No follower.</div>
             </div>
@@ -52,7 +52,7 @@ class Followers extends Component {
         );
         return (
           <div className="followers">
-            <h5>Followers</h5>
+            <h4>Followers</h4>
             <div>{followers}</div>
           </div>
         );
