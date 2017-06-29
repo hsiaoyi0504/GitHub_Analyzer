@@ -2,7 +2,6 @@
 no-console: "off",
 no-underscore-dangle: "off" */
 import React, { Component } from 'react';
-import { Link } from 'react-router-dom';
 import './style.css';
 
 class Followings extends Component {
@@ -31,7 +30,7 @@ class Followings extends Component {
     if(this.state.isWait) {
       return (
         <div className="followings">
-          <h5>Followings</h5>
+          <h4>Followings</h4>
           <div>
             <div>Fetching...</div>
           </div>
@@ -41,7 +40,7 @@ class Followings extends Component {
       if (this.state.followings.length === 0) {
         return (
           <div className="followings">
-            <h5>Followings</h5>
+            <h4>Followings</h4>
             <div>
               <div>No one follows.</div>
             </div>
@@ -53,7 +52,7 @@ class Followings extends Component {
         );
         return (
           <div className="followings">
-            <h5>Followings</h5>
+            <h4>Followings</h4>
             <div>{followings}</div>
           </div>
         );
