@@ -37,7 +37,7 @@ class User extends Component {
     return(
       <div className="user-profile">
         <a href={user.html_url} target="_blank" title={user.name || user.login}>
-          <img src={user.avatar_url}/>
+          <img className="user-profile-img" src={user.avatar_url}/>
         </a>
         <h2>
           <a href={user.html_url} title={user.login} target="_blank">{user.name || user.login}</a>
@@ -64,8 +64,9 @@ class User extends Component {
           <li>
             <a href={following} target="_blank" title="Number Of Following"><i>{user.following}</i><span>Following</span></a>
           </li>
-          </ul>
-     </div>
+          <Stars uName={this.state.username}/>
+        </ul>
+      </div>
     );
   }
 
@@ -90,7 +91,6 @@ class User extends Component {
              
               {this.renderBasicProfile()}
               {this.renderStat()}
-              <Stars uName={this.state.username}/>
               <Followers url={this.state.user.followers_url} />
               <Followings url={'https://api.github.com/users/'+this.state.username+'/following'} />
               <Piechart userName={this.state.username} pageCnt={pageCnt} />
