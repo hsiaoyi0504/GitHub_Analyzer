@@ -6,6 +6,7 @@ import './style.css';
 import Stars from './Stars';
 import Followers from './Followers';
 import Followings from './Followings';
+import Repos from './Repos';
 
 class User extends Component {
   constructor(props) {
@@ -22,7 +23,8 @@ class User extends Component {
     fetch(`https://api.github.com/users/${this.state.username}`)
     .then(res => res.json())
     .then(user => {
-      this.setState({ user: user, isFetched: true });
+      let arr = Array.apply(null, {length: user.public_repos}).map(Number.call, Number);
+      this.setState({ user: user, isFetched: true, repmap: arr });
     })
     .catch(error => console.log('ooops'))
   }
@@ -86,6 +88,7 @@ class User extends Component {
               <Stars uName={this.state.username}/>
               <Followers url={this.state.user.followers_url} />
               <Followings url={'https://api.github.com/users/'+this.state.username+'/following'} />
+              <Repos username={this.state.username}/>
             </div>
           </div>
         );

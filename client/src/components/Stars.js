@@ -17,8 +17,8 @@ class Stars extends Component {
       console.log('willmount' + this.props.uName);
       fetch(`https://api.github.com/users/${this.props.uName}/starred?per_page=1`)
       .then(res => {
-          console.log('idothingshere');
-          console.log(res.headers.get('Link'));
+          // console.log('idothingshere');
+          // console.log(res.headers.get('Link'));
           let tmpstr = '';
           tmpstr = res.headers.get('Link');
           this.setState({ pageNum: parseString(tmpstr) })
@@ -27,12 +27,12 @@ class Stars extends Component {
       .then(data => {
         this.setState({ data });
       })
-      .catch(err => 'catch err..');
+      .catch(err => console.log('catch err..'));
   }
 
   render() {
     //console.log(this.props.uName);
-    console.log(this.state.pageNum);
+    // console.log(this.state.pageNum);
     let starLink = `https://github.com/${this.props.uName}?tab=stars`;
     return (
       <div className="user-stars">
