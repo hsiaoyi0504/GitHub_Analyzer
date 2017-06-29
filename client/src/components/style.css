@@ -9,7 +9,7 @@ ul {
 }
 
 .App {
-  text-align: center;
+  text-align: center; 
 }
 
 .App-logo {
@@ -18,10 +18,9 @@ ul {
 }
 
 .App-header {
-  background-color: #222;
-  height: 80px;
+  background-color: #fff;
+  height: auto;
   padding: 20px;
-  color: white;
   margin-bottom: 20px;
 }
 
