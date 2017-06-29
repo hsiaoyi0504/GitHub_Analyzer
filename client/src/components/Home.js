@@ -3,7 +3,9 @@ no-console: "off",
 no-underscore-dangle: "off" */
 import React, { Component } from 'react';
 import { Redirect } from 'react-router';
+import { Image, ControlLabel, Button, Form, FormControl } from 'react-bootstrap';
 import './style.css';
+import logo from '../img/logo.png';
 
 class Home extends Component {
   constructor(props) {
@@ -32,16 +34,14 @@ class Home extends Component {
     return (
       <div className="App">
         <div className="App-header">
-          <h2>GitHub Analyzer</h2>
+          <Image src={logo} responsive/>
         </div>
         <div className="App-content">
-          <form onSubmit={this.handleSubmit}>
-            <label>
-              User name:
-              <input type="text" value={this.state.value} onChange={this.handleChange} />
-            </label>
-            <input type="submit" value="Submit" />
-          </form>
+          <Form onSubmit={this.handleSubmit} inline>
+            <ControlLabel>User name: </ControlLabel>
+            <FormControl type="text" value={this.state.value} onChange={this.handleChange} />
+            <Button type="submit">Submit</Button>
+          </Form>
         </div>
       </div>
     );
